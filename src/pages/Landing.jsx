@@ -1,4 +1,4 @@
-import DragCard from "../components/DragCard";
+// import DragCard from "../components/DragCard";
 
 export default function Landing() {
   return(
@@ -6,7 +6,7 @@ export default function Landing() {
       <span>Landing </span>
       <div style={{height: '500px',  width: '500px',  alignItems: 'center', justifyContent: 'center', display: 'flex', flexDirection: 'column'}}>
 
-      <DragCard />
+      {/* <DragCard /> */}
       </div>
     </div>
   )
