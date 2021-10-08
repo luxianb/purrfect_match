@@ -1,6 +1,7 @@
 # Purrfect Match
+![Logo](./static/Logo.svg "Logo")
+##
 Tinder like app where users explore and discover the best pet for them based on swiping on images they find appealing
-
 ## User Story
 As a user...
 * I would like to know about the app
@@ -8,6 +9,8 @@ As a user...
 * I would like to be able to retry if I'm unsatisfied with my results
 
 ## MVP
+* Fetch pet images from API and display as image cards
+* Functions to cycle through image set and keep or discard card
 * App that generates a match result from swiping down from a set of images
 
 ## Bonus
@@ -17,8 +20,17 @@ As a user...
 * Ability for user to save the results that they have gained (Login and firebase storage)
 * Add swipping action for users to click and drag or swip on their phone
 
+## Wireframes
+### Landing Page
+![Landing](./static/Landing.png)
+### Matching Page
+![Matchpage](./static/MatchingPage.png)
+
+
 ## Tech Stack
 * React
 * [TheCatApi](https://docs.thecatapi.com/)
 * [DogApi](https://dog.ceo/dog-api/)
+* [react-spring](https://react-spring.io/)
+* [use-gesture](https://use-gesture.netlify.app/)
 <!-- * [RandomDog](https://random.dog/) -->
