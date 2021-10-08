@@ -1,0 +1,45 @@
+.cardContainer {
+  padding: 18px;
+  background-color: white;
+  border: 1.5px solid #c62828;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 23, 68, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cardImage {
+  height: 400px;
+  width: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  /* background-color: darkgrey; */
+}
+
+.keepButton {
+  color: rgb(0, 191, 165);
+  background-color: rgba(0, 191, 165, 0.2);
+  border: 0;
+  width: 100%;
+  margin-right: 6px;
+}
+.keepButton:hover, .keepButton:focus {
+  color: rgb(255, 255, 255);
+  background-color: rgba(0, 191, 165, 1);
+  border: 0;
+}
+
+.nopeButton {
+  color: rgb(255, 23, 68);
+  background-color: rgba(255, 23, 68, 0.2);
+  border: 0;
+  width: 100%;
+}
+.nopeButton:hover, .nopeButton:focus {
+  color: rgb(255, 255, 255);
+  background-color: rgba(255, 23, 68, 1);
+  border: 0;
+}

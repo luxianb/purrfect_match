@@ -1,0 +1,8 @@
+.counterContainer {
+  background-color: rgba(38, 50, 56, 0.1);
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-top: 6px;
+  display: inline-block;
+}
