@@ -1,5 +1,6 @@
 import './MatchPage.css'
 import { Typography } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
 import axios from 'axios';
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,8 +72,9 @@ export default function MatchPage() {
 
       
       <div style={{position: 'relative'}}>
-        {/* <CardStack source={cardsInfo} /> */}
-        {cardsInfo?.map((card, index) => (<>
+        {cardsInfo.length < 1 ?
+          <LoadingOutlined spin style={{fontSize: '60px', color: '#FF5252', margin: '18px' }}/>
+         : cardsInfo?.map((card, index) => (<>
           {index < 3 && (
             <ImageCard 
             image={card.url} 
