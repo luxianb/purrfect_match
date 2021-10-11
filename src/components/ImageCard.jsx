@@ -1,9 +1,12 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './ImageCard.css'
 import {Button, Space} from 'antd'
-import {animated} from '@react-spring/web'
+import {animated, useSpring, to} from '@react-spring/web'
 
 import { addCardToRandomPosition, removeCard } from '../redux/slice/imagesSlice';
 import { useDispatch } from 'react-redux';
+import { useEffect, useState } from 'react';
+import { useDrag } from '@use-gesture/react';
 
 const CardButton = (props) => (
   <Button block shape="round" {...props} >
@@ -12,16 +15,55 @@ const CardButton = (props) => (
 )
 
 export default function ImageCard(props) {
+  const [animate, setAnimate] = useState('none')
+  const [animStyle, api] = useSpring(() => ({x: 0, y:0, transform: `rotate(${0}deg) translateX(${0}px)`, opacity: 1}))
   const dispatch = useDispatch()
-  return(
-    <animated.div style={props.animStyle}>
 
-    <div className="cardContainer" style={{
-      ...props?.index > 0 ? {
-        position: 'absolute',
-        top: -props.index * 10,
-        zIndex: 3 - props.index
-      }: {position: 'relative', zIndex: 3}}}>
+
+  useEffect(() => {
+    if (animate === 'left') {
+      api.start({
+        x: -400,
+        transform: to([animStyle.x], (x) => `rotate(${x * 0.1}deg) translateX(${x}px)`),
+        opacity: 0,
+        onRest: () => dispatch(addCardToRandomPosition())
+      })
+    }
+    if (animate === 'right') {
+      api.start({
+        x: 400,
+        transform: to([animStyle.x], (x) => `rotate(${x * 0.1}deg) translateX(${x}px)`),
+        opacity: 0,
+        onRest: () => dispatch(removeCard())
+      })
+    }
+  }, [animate])
+
+  const bind = useDrag(({down, movement: [mx]}) => {
+    api.start({
+      x: down ? mx : 0,
+      transform: down ? `rotate(${mx * 0.1}deg) translateX(${mx}px)` : `rotate(0deg) translateX(0px)`,
+      immediate: down
+    })
+    if(mx < -200) { 
+      api.start({x: mx})
+      setAnimate('left')
+    }
+    if(mx > 200) { 
+      api.start({x: mx})
+      setAnimate('right')
+    }
+  })
+
+
+  return(
+    <animated.div {...bind()} style={{...props?.index > 0 ? {
+      position: 'absolute',
+      top: -props.index * 10,
+      zIndex: 3 - props.index
+    }: {position: 'relative', zIndex: 3},...animStyle}}>
+
+    <div className="cardContainer">
 
       <Space direction="vertical">
         <div 
@@ -33,12 +75,14 @@ export default function ImageCard(props) {
         <div className="row">
           <CardButton 
             className="keepButton" 
-            onClick={() => dispatch(addCardToRandomPosition())} 
+            onClick={() => setAnimate('left')} 
+            // onClick={() => dispatch(addCardToRandomPosition())} 
             label="Keep" 
           />
           <CardButton 
             className="nopeButton"
-            onClick={() => dispatch(removeCard())} 
+            onClick={() => setAnimate('right')} 
+            // onClick={() => dispatch(removeCard())} 
             label="Nope" 
           />
           </div>
