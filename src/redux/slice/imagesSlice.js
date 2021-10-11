@@ -1,12 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useHistory } from 'react-router';
+
+const initialState = {
+  cardsInfo: [],
+  matchFound: false,
+};
 
 export const imageSlice = createSlice({
   name: 'cards',
-  initialState: {
-    cardsInfo: [],
-    matchFound: false,
-  },
+  initialState,
   reducers: {
     setCardInfo: (state, action) => {
       state.cardsInfo = action.payload
@@ -38,11 +39,14 @@ export const imageSlice = createSlice({
     },
     toggleMatchFound: (state) => {
       state.cardsInfo = !state.matchFound
+    },
+    clearCards: (state) => {
+      state = initialState
     }
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { setCardInfo, addCardToRandomPosition, removeCard, toggleMatchFound } = imageSlice.actions
+export const { setCardInfo, addCardToRandomPosition, removeCard, toggleMatchFound, clearCards } = imageSlice.actions
 
 export default imageSlice.reducer

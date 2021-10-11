@@ -14,8 +14,8 @@ function App() {
       <Layout className="App" style={{minHeight: '100vh'}}>
       <Layout.Content>
         <Switch store={store}>
-          <Route exact path="/" component={MatchPage} />
-          {/* <Route exact path="/" component={Landing} /> */}
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/match/:breed" component={MatchPage} />
         </Switch>
       </Layout.Content>
       </Layout>
