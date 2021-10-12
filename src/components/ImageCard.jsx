@@ -16,10 +16,11 @@ const CardButton = (props) => (
 
 export default function ImageCard(props) {
   const [animate, setAnimate] = useState('none')
-  const [animStyle, api] = useSpring(() => ({x: 0, y:0, transform: `rotate(${0}deg) translateX(${0}px)`, opacity: 1}))
+  const [animStyle, api] = useSpring(() => ({x: 0, y:0, transform: `rotate(${0}deg) translateX(${0}px)`, opacity: 1, touchAction: 'none'}))
   const dispatch = useDispatch()
 
 
+  // Start swipping animation based on state toggle, then update the card strore state at the end of the animation
   useEffect(() => {
     if (animate === 'left') {
       api.start({
@@ -39,21 +40,22 @@ export default function ImageCard(props) {
     }
   }, [animate])
 
-  const bind = useDrag(({down, movement: [mx]}) => {
+  const bind = useDrag(({down, movement: [mx], swipe: [swipeX]}) => {
     api.start({
       x: down ? mx : 0,
       transform: down ? `rotate(${mx * 0.1}deg) translateX(${mx}px)` : `rotate(0deg) translateX(0px)`,
       immediate: down
-    })
-    if(mx < -200) { 
+    }, { axis: 'x' })
+    if(mx < -200 || swipeX < 0) { 
       api.start({x: mx})
       setAnimate('left')
     }
-    if(mx > 200) { 
+    if(mx > 200 || swipeX > 0) { 
       api.start({x: mx})
       setAnimate('right')
     }
   })
+
 
 
   return(
@@ -61,7 +63,8 @@ export default function ImageCard(props) {
       position: 'absolute',
       top: -props.index * 10,
       zIndex: 3 - props.index
-    }: {position: 'relative', zIndex: 3},...animStyle}}>
+    }: {position: 'relative', zIndex: 3},...animStyle}}
+    >
 
     <div className="cardContainer">
 
