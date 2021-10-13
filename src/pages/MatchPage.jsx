@@ -1,50 +1,76 @@
 import './MatchPage.css'
-import { Typography } from 'antd';
-import { LoadingOutlined } from '@ant-design/icons';
 import axios from 'axios';
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from 'react-router';
-import ImageCard from "../components/ImageCard";
-import { addCardToRandomPosition, clearCards, removeCard, setCardInfo, toggleMatchFound } from '../redux/slice/imagesSlice';
+import {clearCards,setCardInfo, toggleMatchFound } from '../redux/slice/imagesSlice';
+// import NavigationBar from '../components/NavigationBar';
+import styled from 'styled-components';
+import CardStack from '../components/CardStack';
+import Header from '../components/Header'
+import FactDisplay from '../components/FactDisplay';
 // import DogAutoComplete from '../components/DogAutoComplete';
 
+const PageContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  width: 100%;
+`
+
+const ContentContainer = styled.main`
+  padding: 18px 12px;
+  align-items: ${p => p.isMobile ? 'center' : 'start'};;
+  display: ${p => p.isMobile ? 'flex' : 'grid'};
+  flex-direction: column;
+  flex: 1; 
+  justify-items: center;
+  grid-template-columns: ${p => !p.isMobile ? '.5fr 1fr .5fr' : ''};
+  grid-template-areas: ${p => !p.isMobile ? '"left cards right"' : '""'};
+`
+const CountContainer = styled.div`
+  background-color: rgba(38, 50, 56, 0.1);
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  margin-top: 6px;
+`
 
 export default function MatchPage() {
+  const contentRef = useRef()
   const params = useParams()
-  const state = useSelector(state => state.cards)
-  const {cardsInfo, matchFound} = state;
+  const state = useSelector(state => state)
+  const { cardsInfo, matchFound } = state.cards;
+  const isMobile = state.display.deviceType === "mobile";
   const dispatch = useDispatch()
   const history = useHistory()
 
-  async function getCatImages(limit) {
+  async function getCatImages(limit, breed) {
     const data = await axios.get(`https://api.thecatapi.com/v1/images/search`, {
-      params: {api_key: process.env.REACT_APP_CAT_API_KEY, limit: limit || 20}
+      params: {api_key: process.env.REACT_APP_CAT_API_KEY, limit: limit || 20, breed_id: breed || ''}
     })
     // console.log("Image fetch", data.data)
     dispatch(setCardInfo(data.data))
   }  
 
   async function getDogImages(limit, breed) {
-    let url;
-    if (breed) {
-      url = `https://dog.ceo/api/breed/${breed}/images/random/${limit || 20}`
-    } else {
-      url = `https://dog.ceo/api/breeds/image/random/${limit || 20}`
-    }
-    const data = await axios.get(url)
-    const formatedData = data.data.message.map((item) => ({ url: item }))
-    // console.log("Image fetch", formatedData)
-    dispatch(setCardInfo(formatedData))
+    const data = await axios.get('https://api.thedogapi.com/v1/images/search', {
+      params: {api_key: process.env.REACT_APP_DOG_API_KEY, limit: limit || 20, breed_id: breed || ''}
+    })
+
+    dispatch(setCardInfo(data.data))
   }
 
-  // async function getDogImages(limit) {
-  //   const data = await axios.get(`https://dog.ceo/api/breeds/image/random/${limit || 20}`)
-  //   const formatedData = data.data.message.map((item) => ({ url: item }))
-  //   // console.log("Image fetch", formatedData)
-  //   dispatch(setCardInfo(formatedData))
-  // }
 
+
+  // async function getCatBreeds() {
+  //   const data = await axios.get('https://api.thecatapi.com/v1/breeds', {
+  //     params: {api_key: process.env.REACT_APP_CAT_API_KEY}
+  //   })
+  //   // const parsedData = data.data.map((each) => ({text: each.text}))
+
+  //   console.log(data.data)
+  // }
 
   
   useEffect(() => {
@@ -54,45 +80,46 @@ export default function MatchPage() {
       getCatImages() 
     }
     return () => { dispatch(clearCards()) }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [params])
+  
   useEffect(() => {
     if(matchFound) {
-      toggleMatchFound()
-      history.push('/landing')
+      dispatch(toggleMatchFound());
+      history.push(`/found/${params.breed}/${cardsInfo[0].id}`)
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [matchFound])
-
+  
 
   return(
-    <>
-      <Typography.Title>Match Page</Typography.Title>
+    <PageContainer>
+      <Header />
 
-      
-      <div style={{position: 'relative'}}>
-        {cardsInfo.length < 1 ?
-          <LoadingOutlined spin style={{fontSize: '60px', color: '#FF5252', margin: '18px' }}/>
-         : cardsInfo?.map((card, index) => (<>
-          {index < 3 && (
-            <ImageCard 
-            image={card.url} 
-            index={index}
-            key={card.url}
-            onKeepClick={() => dispatch(addCardToRandomPosition())}
-            onNopeClick={() => dispatch(removeCard())}
-            />
-            )}
-        </>))}
+      <ContentContainer ref={contentRef} isMobile={isMobile}>
 
-      </div>
+        <div style={{gridArea: 'cards', display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center'}}>
+          <CardStack/>
+          <p>
+            <i class="fas fa-arrow-left" />
+            {` swipe left to keep the ${params.breed === "findMeACat" ? "cat" : "dog"} or swipe right to remove`}
+            <i class="fas fa-arrow-right" />
+          </p>
+          <CountContainer>
+            <h2 style={{margin: 0}}>{cardsInfo.length} left</h2>
+          </CountContainer>
+        </div>
 
-      <Typography.Text className="counterContainer">
-        {cardsInfo.length} left
-      </Typography.Text>
-            {/* <DogAutoComplete /> */}
+        {params.breed === 'findMeACat' && !isMobile && (
+          <div style={{gridArea: "right"}}>
+            <FactDisplay />
+          </div>
+        )}
 
-    </>
+      </ContentContainer>
+      {/* <DogAutoComplete /> */}
+      {/* <NavigationBar /> */}
+
+    </PageContainer>
   )
 }

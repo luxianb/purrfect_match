@@ -1,7 +1,7 @@
 .cardContainer {
   padding: 18px;
   background-color: white;
-  border: 1.5px solid #c62828;
+  /* border: 1.5px solid #c62828; */
   border-radius: 12px;
   box-shadow: 0 0 12px rgba(255, 23, 68, 0.2);
   display: flex;
@@ -11,17 +11,25 @@
 }
 
 .cardImage {
-  height: 400px;
-  width: 300px;
+  height: 600px;
+  width: 337.5px;
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  /* background-color: darkgrey; */
+}
+
+.buttonRow {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: end;
+  width: 100%;
 }
 
 .keepButton {
   color: rgb(0, 191, 165);
-  background-color: rgba(0, 191, 165, 0.2);
+  /* background-color: rgba(0, 191, 165, 0.2); */
+  background-color: rgba(255, 255, 255, .75);
   border: 0;
   width: 100%;
   margin-right: 6px;
@@ -34,7 +42,8 @@
 
 .nopeButton {
   color: rgb(255, 23, 68);
-  background-color: rgba(255, 23, 68, 0.2);
+  background-color: rgba(255, 255, 255, .75);
+  /* background-color: rgba(255, 23, 68, 0.2); */
   border: 0;
   width: 100%;
 }

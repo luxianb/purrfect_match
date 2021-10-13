@@ -38,10 +38,11 @@ export const imageSlice = createSlice({
       }
     },
     toggleMatchFound: (state) => {
-      state.cardsInfo = !state.matchFound
+      state.matchFound = false
     },
     clearCards: (state) => {
-      state = initialState
+      state.cardsInfo = []
+      state.matchFound = false
     }
   },
 })

@@ -1,0 +1,16 @@
+.navContainer {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-around;
+  background-color: rgba(255, 23, 68, 0.1);
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.navItem {
+  display: flex;
+  flex: 1;
+  color: #FF1744;
+  font-size: 30px;
+}

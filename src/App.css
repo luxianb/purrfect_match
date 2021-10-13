@@ -1,8 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Righteous&display=swap');
+
 .App {
   text-align: center;
   align-items: center;
   min-height: 100vh;
   min-width: 100vw;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .row {
@@ -16,17 +21,14 @@ button {
   border: 0
 }
 
-/* @media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  font-family: 'Noto Sans', sans-serif;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1, h2 {
+  font-family: 'Righteous', cursive;
+}
+
+/* a {
+  color: #FF5252;
 } */
