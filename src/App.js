@@ -2,11 +2,10 @@
 import './App.css';
 import 'antd/dist/antd.css';
 import {useDispatch} from 'react-redux'
-import {Switch, Route, Redirect} from 'react-router-dom'
+import {Switch, Route} from 'react-router-dom'
 import store from './redux/store'
 import Landing from './pages/Landing';
 import MatchPage from './pages/MatchPage';
-import { Layout } from 'antd';
 import { useEffect } from 'react';
 import { updateDisplayWidth } from './redux/slice/displaySlice';
 import MatchFoundPage from './pages/MatchFoundPage';
