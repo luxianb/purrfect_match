@@ -30,7 +30,7 @@ export const ButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
-  align-items: end;
+  align-items: flex-end;
   width: 100%;
 `;
 
