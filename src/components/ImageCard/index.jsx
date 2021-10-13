@@ -4,7 +4,7 @@ import {useSpring, to} from '@react-spring/web'
 import { useDispatch,  useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDrag } from '@use-gesture/react';
-import { addCardToRandomPosition, removeCard } from '../redux/slice/imagesSlice';
+import { addCardToRandomPosition, removeCard } from '../../redux/slice/imagesSlice';
 import { ContainerDiv, CardContainer, ExpandButton, ButtonContainer, CardButton } from './components';
 
 export default function ImageCard(props) {
