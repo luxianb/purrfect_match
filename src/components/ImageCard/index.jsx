@@ -1,69 +1,16 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './ImageCard.css'
-import {Button} from 'antd'
-import styled from 'styled-components'
-import {animated, useSpring, to} from '@react-spring/web'
-
-import { addCardToRandomPosition, removeCard } from '../redux/slice/imagesSlice';
+import {useSpring, to} from '@react-spring/web'
 import { useDispatch,  useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDrag } from '@use-gesture/react';
-
-const ContainerDiv = styled(animated.div)`
-  position: ${p => p.index > 0 ? 'absolute' : 'relative'};
-  z-index: ${p => p.index > 0 ? 3 - p.index : 3};
-  top: ${p => p.index > 0 ? `${-p.index * 10}px` : 0};
-  width: 100%;
-  `
-
-const CardContainer = styled.div`
-  position: relative;
-  padding: 18px;
-  background-color: white;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(255, 23, 68, 0.2);
-  display: flex;
-  flex-direction: column;
-  height: ${p => `${p.height}px`};
-  width: ${p => p.deviceType === "mobile" ? `100%` :`${Math.floor(p.height / 16 * 9)}px`};
-  background-image: ${p => `url(${p.image})`};
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-  margin: 0 auto;
-`
-
-const CardButton = (props) => (
-  <Button block shape="round" size="large" {...props} >
-    {props.label}
-  </Button>
-)
-
-const ExpandContainer = styled.div`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  color: white;
-  height: 30px;
-  width: 30px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: rgba(255,255,255, 0.2);
-`
-
-const ExpandButton = (props) => (
-  <ExpandContainer onClick={props.onClick}>
-    <i class="fas fa-expand" style={{margin: 0}}/>
-  </ExpandContainer>
-)
+import { addCardToRandomPosition, removeCard } from '../redux/slice/imagesSlice';
+import { ContainerDiv, CardContainer, ExpandButton, ButtonContainer, CardButton } from './components';
 
 export default function ImageCard(props) {
   const [animate, setAnimate] = useState('none')
   const [animStyle, api] = useSpring(() => ({x: 0, y:0, transform: `rotate(${0}deg) translateX(${0}px)`, opacity: 1, touchAction: 'none'}))
   const dispatch = useDispatch()
-
 
   // Start swipping animation based on state toggle, then update the card strore state after the animation has run
   useEffect(() => {
@@ -121,8 +68,7 @@ export default function ImageCard(props) {
       
         <ExpandButton />
         
-
-        <div className="buttonRow">
+        <ButtonContainer>
           <CardButton 
             className="keepButton" 
             onClick={() => setAnimate('left')} 
@@ -133,7 +79,7 @@ export default function ImageCard(props) {
             onClick={() => setAnimate('right')} 
             label="Nope" 
           />
-          </div>
+          </ButtonContainer>
     </CardContainer>
   </ContainerDiv>
   )
