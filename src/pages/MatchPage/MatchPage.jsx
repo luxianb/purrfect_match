@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import './MatchPage.css'
 import axios from 'axios';
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from 'react-router';
 import {clearCards,setCardInfo, toggleMatchFound } from '../../redux/slice/imagesSlice';
