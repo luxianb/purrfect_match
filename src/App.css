@@ -21,12 +21,13 @@ button {
   border: 0
 }
 
-body {
-  font-family: 'Noto Sans', sans-serif;
+h1, h2, h3, h4 {
+  font-family: 'Righteous', cursive;
 }
 
-h1, h2 {
-  font-family: 'Righteous', cursive;
+p {
+  font-family: 'Noto Sans', sans-serif;
+  font-size: 1rem;
 }
 
 /* a {

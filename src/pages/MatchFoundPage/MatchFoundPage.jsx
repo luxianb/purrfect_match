@@ -1,12 +1,12 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useDispatch, useSelector } from "react-redux";
-import { PresentationCard } from "../components/ImageCard";
+import { PresentationCard } from "../../components/ImageCard";
 import {Link, useParams} from 'react-router-dom';
 import { useEffect, useState } from "react";
 import axios from "axios";
-import Header from '../components/Header';
+import Header from '../../components/Header';
 import styled from "styled-components";
-import { clearCards } from "../redux/slice/imagesSlice";
+import { clearCards } from "../../redux/slice/imagesSlice";
 
 
 
@@ -20,7 +20,7 @@ export default function MatchFoundPage() {
   useEffect(() => {
     dispatch(clearCards())
     let url
-    if (param.breed === 'findMeADog') {
+    if (param.type === 'findMeADog') {
       url = `https://api.thedogapi.com/v1/images/${param.id}`
     } else {
       url = `https://api.thecatapi.com/v1/images/${param.id}`
@@ -44,7 +44,7 @@ export default function MatchFoundPage() {
         <PresentationCard image={cardInfo.url}/>
       }
       <h1>Match found!</h1>
-      <p>Not satisfied with your result? {isComputer ? "Click" : "Tap"} <Link to={`/match/${param.breed}`}>here</Link> to try again</p>
+      <p>Not satisfied with your result? {isComputer ? "Click" : "Tap"} <Link to={(`/match/${param.type}${param.breed ? `/${param.breed}`: ''}`)}>here</Link> to try again</p>
     </Page>
   );
 }

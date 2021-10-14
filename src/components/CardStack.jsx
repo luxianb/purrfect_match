@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import styled from 'styled-components';
-import ImageCard from "../components/ImageCard";
+import ImageCard from "./ImageCard";
 import Spinner from './Spinner';
 
 const StackContainer = styled.div`
@@ -32,7 +32,7 @@ export default function CardStack(props) {
   return (
     <StackContainer isMobile={isMobile} ref={containerRef}>
     {cardsInfo?.length < 1 ?
-      <div><Spinner /></div>
+      <div style={{margin: 'auto'}}><Spinner /></div>
       : cardsInfo && cardsInfo?.map((card, index) => (<>
       {index < 3 && (
         <ImageCard 

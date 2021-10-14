@@ -5,7 +5,8 @@ import { useDispatch,  useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { useDrag } from '@use-gesture/react';
 import { addCardToRandomPosition, removeCard } from '../../redux/slice/imagesSlice';
-import { ContainerDiv, CardContainer, ExpandButton, ButtonContainer, CardButton } from './components';
+import { ContainerDiv, CardContainer, PresentationCardContainer, ButtonContainer, CardButton, CardImage } from './components';
+
 
 export default function ImageCard(props) {
   const [animate, setAnimate] = useState('none')
@@ -65,8 +66,10 @@ export default function ImageCard(props) {
   return(
     <ContainerDiv {...bind()} style={{...animStyle}} index={props.index}>
       <CardContainer image={props.image} height={props.height || 500} deviceType={useSelector((state) => state.display.deviceType)}>
+
+        <CardImage image={props.image}/>
       
-        <ExpandButton />
+        {/* <ExpandButton /> */}
         
         <ButtonContainer>
           <CardButton 
@@ -87,7 +90,7 @@ export default function ImageCard(props) {
 
 export function PresentationCard(props) {
   return(
-    <CardContainer
+    <PresentationCardContainer
       image={props.image}
       height={props.height || 500}
       deviceType={useSelector((state) => state.display.deviceType)}

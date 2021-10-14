@@ -4,15 +4,8 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import styled from "styled-components"
-import Spinner from "./Spinner"
-
-const Container = styled.div`
-  background-color: rgba(255, 23, 68, 0.1);
-  padding: 12px;
-  border-radius: 6px;
-  margin-left: 18px;
-  width: 300px;
-`
+import Spinner from "../Spinner"
+import { Container } from "./components"
 
 const ButtonContainer = styled.div`
   display: flex;
@@ -39,7 +32,7 @@ export default function FactDisplay() {
     status: 'initial'
   })
   const params = useParams()
-  const isCat = params.breed === "findMeACat";
+  const isCat = params.type === "findMeACat";
 
   // function setFact(value) {setState({...state, facts: value})}
   // function setStatus(value) {setState({...state, status: value})}
@@ -51,7 +44,7 @@ export default function FactDisplay() {
       async function getCatFact() {
         const data = await axios.get('https://cat-fact.herokuapp.com/facts')
         const parsedData = data.data.map((each) => ({text: each.text}))
-        
+
         setState({...state, status: 'dataFetched', facts: parsedData})
       }
       getCatFact()
