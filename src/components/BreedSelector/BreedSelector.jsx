@@ -88,19 +88,19 @@ export default function BreedSelector() {
   return (
     <Form onSubmit={(e) => {e.preventDefault()}}>
       <Input.Group compact>
-      <AnimalSelector />
-      <AutoComplete
-        value={value}
-        options={options}
-        onSelect={(data) => console.log('onSelect', value)}
-        onSearch={onSearch}
-        onChange={(data) => setValue(data)}
-        placeholder="Choose a breed"
-        style={{
-          minWidth: 200, textAlign: 'left'
-        }}
-      />
-      <SubmitButton />
+        <AnimalSelector />
+        <AutoComplete
+          value={value}
+          options={options}
+          onSelect={(data) => console.log('onSelect', value)}
+          onSearch={onSearch}
+          onChange={(data) => setValue(data)}
+          placeholder="Choose a breed"
+          style={{
+            minWidth: 200, textAlign: 'left'
+          }}
+        />
+        <SubmitButton />
       </Input.Group>
     </Form>
     )

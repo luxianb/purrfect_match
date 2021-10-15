@@ -9,15 +9,17 @@ import CardStack from '../../components/CardStack';
 import Header from '../../components/Header'
 // import FactDisplay from '../components/InfoDisplays/FactDisplay';
 import BreedInfoDisplay from '../../components/InfoDisplays/BreedInfoDisplay';
-import { PageContainer, ContentContainer, CountContainer } from './components';
+import { PageContainer, ContentContainer, HelperText, CardCounter } from './components';
 
 export default function MatchPage() {
-  const params = useParams()
+  // Hooks
+  const params = useParams(); const dispatch = useDispatch(); const history = useHistory();
+  // Destructure
   const {cards: {cardsInfo, matchFound}, display} = useSelector(state => state)
+  // Conditions
   const isMobile = display.deviceType === "mobile";
-  const dispatch = useDispatch()
-  const history = useHistory()
 
+  // Functions
   async function getCatImages(breed) {
     const data = await axios.get(`https://api.thecatapi.com/v1/images/search`, {
       params: {api_key: process.env.REACT_APP_CAT_API_KEY, limit: 20, breed_id: breed || ''}
@@ -32,6 +34,7 @@ export default function MatchPage() {
     dispatch(setCardInfo(data.data))
   }
   
+  // On load get images
   useEffect(() => {
     if(params.type === 'findMeADog') {
       getDogImages(params.breed || '')
@@ -40,15 +43,13 @@ export default function MatchPage() {
     }
     return () => { dispatch(clearCards()) }
   }, [params])
-  
-  useEffect(() => {
-    if(matchFound) {
-      dispatch(toggleMatchFound());
-      history.push(`/found/${params.type}/${cardsInfo[0].id}${params.breed ? `/${params.breed}` : ''}`)
-    }
-  }, [matchFound])
-  
 
+  // Reroutes if match condition toggles
+  if(matchFound) {
+    dispatch(toggleMatchFound());
+    history.push(`/found/${params.type}/${cardsInfo[0].id}${params.breed ? `/${params.breed}` : ''}`)
+  }
+  
   return(
     <PageContainer>
       <Header />
@@ -57,24 +58,14 @@ export default function MatchPage() {
 
         <div style={{gridArea: 'cards', display: 'flex', flex: 1, flexDirection: 'column', alignItems: 'center'}}>
           <CardStack/>
-          <p style={{marginTop: '8px'}}>
-            <i class="fas fa-arrow-left" />
-            {` swipe left to keep the ${params.type === "findMeACat" ? "cat" : "dog"} or swipe right to remove`}
-            <i class="fas fa-arrow-right" />
-          </p>
-          <CountContainer>
-            <h2 style={{margin: 0}}>{cardsInfo.length} left</h2>
-          </CountContainer>
+          <HelperText type={params.type}/>
+          <CardCounter count={cardsInfo.length} />
         </div>
 
         {!isMobile && (
           <div style={{gridArea: "right"}}>
-            {params.breed && (
-              <BreedInfoDisplay />
-            )}
-            {/* {params.type === 'findMeACat' && (
-              <FactDisplay />
-            )} */}
+            {params.breed && ( <BreedInfoDisplay /> )}
+            {/* {params.type === 'findMeACat' && ( <FactDisplay /> )} */}
           </div>
         )}
 
@@ -83,3 +74,5 @@ export default function MatchPage() {
     </PageContainer>
   )
 }
+
+

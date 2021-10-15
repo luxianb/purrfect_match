@@ -62,7 +62,7 @@ export default function BreedInfoDisplay() {
             </Space>
             <Space>
               <h4>Energy: {info.energy_level}</h4>
-              <h4>Hypoallergenic: {info.hypoallergenic}</h4>
+              <h4>Hypoallergenic: {info.hypoallergenic ? "Yes" : "No"}</h4>
             </Space>
           </>)}
           {params.type === 'findMeADog' && (<>
