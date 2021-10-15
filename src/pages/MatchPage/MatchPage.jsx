@@ -46,7 +46,7 @@ export default function MatchPage() {
       dispatch(toggleMatchFound());
       history.push(`/found/${params.type}/${cardsInfo[0].id}${params.breed ? `/${params.breed}` : ''}`)
     }
-  }, [cardsInfo.length === 1])
+  }, [matchFound])
   
 
   return(

@@ -21,20 +21,29 @@ export const imageSlice = createSlice({
       const minPosition = 2; 
       const position = Math.floor(Math.random() * (state.cardsInfo.length - minPosition) + minPosition)
 
-      const tempArr = [...state.cardsInfo]
-      tempArr.splice(position, 0, tempArr.shift())
+      if (state.cardsInfo.length === 1) {
+         state.matchFound = true
+      } else {
+        const tempArr = [...state.cardsInfo]
+        tempArr.splice(position, 0, tempArr.shift())
+  
+        state.cardsInfo = tempArr
+      }
 
-      state.cardsInfo = tempArr
     },
 
     removeCard: (state) => {
       const returnArr = [...state.cardsInfo]
-      returnArr.shift()
-
-      state.cardsInfo = returnArr
-
-      if (returnArr.length === 1) {
-        state.matchFound = true
+      if (state.cardsInfo.length === 1) {
+       state.matchFound = true
+      } else {
+        returnArr.shift()
+  
+        state.cardsInfo = returnArr
+  
+        if (returnArr.length === 1) {
+          state.matchFound = true
+        }
       }
     },
     toggleMatchFound: (state) => {
