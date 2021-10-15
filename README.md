@@ -2,6 +2,9 @@
 ![Logo](./static/Logo.svg "Logo")
 ##
 Tinder like app where users explore and discover the best pet for them based on swiping on images they find appealing
+## Live Preview
+https://purrfect-match-five.vercel.app/
+
 ## User Story
 As a user...
 * I would like to know about the app
@@ -28,9 +31,9 @@ As a user...
 
 
 ## Tech Stack
-* React
+* [React](https://reactjs.org/)
 * [TheCatApi](https://docs.thecatapi.com/)
 * [DogApi](https://dog.ceo/dog-api/)
 * [react-spring](https://react-spring.io/)
 * [use-gesture](https://use-gesture.netlify.app/)
-<!-- * [RandomDog](https://random.dog/) -->
+* [redux](https://redux.js.org/)
